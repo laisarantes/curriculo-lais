@@ -1,0 +1,24 @@
+<section class="contact-section">
+  <h2 class="titulo-secao">Contato</h2>
+
+  <div class="contact-list">
+
+    @for (contato of contatos; track contato.nome) {
+      <a
+        class="contact-card"
+        [href]="contato.link"
+        target="_blank"
+        rel="noopener noreferrer">
+
+        <div>
+          <h3>{{ contato.nome }}</h3>
+          <p>{{ contato.valor }}</p>
+        </div>
+
+        <span class="contact-arrow">→</span>
+
+      </a>
+    }
+
+  </div>
+</section>

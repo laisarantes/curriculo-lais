@@ -1,0 +1,602 @@
+.hero {
+  position: relative;
+
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  padding: 6rem 6vw 4rem;
+}
+
+
+/* ==================================
+   AURORA / BRILHO REATIVO
+================================== */
+
+.hero::before {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      600px circle at var(--mx, 70%) var(--my, 40%),
+      rgba(255, 45, 149, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      800px circle at 15% 85%,
+      rgba(199, 125, 255, 0.14),
+      transparent 60%
+    ),
+    radial-gradient(
+      500px circle at 90% 10%,
+      rgba(232, 207, 160, 0.08),
+      transparent 60%
+    );
+
+  transition: background 0.15s ease-out;
+}
+
+
+/* ==================================
+   GLows DO FUNDO
+================================== */
+
+.hero-glow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(80px);
+
+  pointer-events: none;
+
+  z-index: 0;
+
+  animation: glowDrift 8s ease-in-out infinite;
+}
+
+.hero-glow-1 {
+  width: 320px;
+  height: 320px;
+
+  top: 5%;
+  right: 15%;
+
+  background: rgba(255, 45, 149, 0.12);
+}
+
+.hero-glow-2 {
+  width: 260px;
+  height: 260px;
+
+  bottom: 5%;
+  left: 5%;
+
+  background: rgba(199, 125, 255, 0.10);
+
+  animation-delay: 2s;
+}
+
+
+/* ==================================
+   CONTEÚDO
+================================== */
+
+.hero-content {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(700px, 90%);
+
+  margin-left: 8vw;
+
+  animation: heroReveal 1s ease forwards;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+
+  margin-bottom: var(--space-md);
+
+  color: var(--accent);
+
+  font-size: 0.75rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.18em;
+
+  opacity: 0;
+
+  animation:
+    fadeUp 0.8s ease 0.2s forwards;
+}
+
+.hero h1 {
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-size: clamp(
+    3rem,
+    8vw,
+    6rem
+  );
+
+  line-height: 0.95;
+
+  font-weight: 800;
+
+  letter-spacing: -0.05em;
+}
+
+.highlight {
+  display: block;
+
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    var(--lavender)
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 35px rgba(
+      255,
+      45,
+      149,
+      0.15
+    );
+}
+
+.hero h2 {
+  margin: var(--space-lg) 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: clamp(
+    1.5rem,
+    3vw,
+    2.3rem
+  );
+
+  line-height: 1.2;
+
+  font-weight: 500;
+}
+
+.hero h2 span {
+  color: var(--accent-hover);
+}
+
+.hero p {
+  max-width: 620px;
+
+  margin: var(--space-lg) 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 1rem;
+
+  line-height: 1.7;
+}
+
+
+/* ==================================
+   BOTÕES
+================================== */
+
+.hero-actions {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: var(--space-sm);
+
+  margin-top: var(--space-xl);
+}
+
+.hero-button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 140px;
+
+  padding: 0.85rem 1.25rem;
+
+  border-radius: var(--radius-full);
+
+  text-decoration: none;
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
+
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.hero-button.primary {
+  background: var(--accent);
+
+  color: white;
+
+  box-shadow:
+    0 0 25px
+    rgba(255, 45, 149, 0.2);
+}
+
+.hero-button.primary:hover {
+  transform: translateY(-3px);
+
+  background: var(--accent-hover);
+
+  box-shadow:
+    0 0 35px
+    rgba(255, 45, 149, 0.35);
+}
+
+.hero-button.secondary {
+  background: var(--glass);
+
+  border: 1px solid var(--border);
+
+  color: var(--text-primary);
+
+  backdrop-filter: blur(10px);
+}
+
+.hero-button.secondary:hover {
+  transform: translateY(-3px);
+
+  border-color: var(--accent);
+
+  box-shadow: var(--shadow-glow);
+}
+
+
+/* ==================================
+   ELEMENTO VISUAL
+================================== */
+
+.hero-decoration {
+  position: absolute;
+
+  right: -5%;
+
+  top: 50%;
+
+  width: 450px;
+  height: 450px;
+
+  transform: translateY(-50%);
+
+  pointer-events: none;
+
+  z-index: 1;
+}
+
+.orb {
+  position: absolute;
+
+  inset: 15%;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(255, 107, 181, 0.9),
+      rgba(255, 45, 149, 0.25) 35%,
+      rgba(199, 125, 255, 0.15) 60%,
+      transparent 72%
+    );
+
+  filter: blur(2px);
+
+  box-shadow:
+    0 0 80px
+    rgba(255, 45, 149, 0.25),
+
+    0 0 140px
+    rgba(199, 125, 255, 0.15);
+
+  animation:
+    orbFloat 6s ease-in-out infinite;
+}
+
+
+/* ==================================
+   TAGS FLUTUANTES
+================================== */
+
+.floating-tag {
+  position: absolute;
+
+  padding: 0.55rem 0.9rem;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-full);
+
+  color: var(--text-secondary);
+
+  font-size: 0.75rem;
+
+  font-weight: 600;
+
+  backdrop-filter: blur(12px);
+
+  box-shadow: var(--shadow-sm);
+
+  animation:
+    tagFloat 5s ease-in-out infinite;
+}
+
+.tag-1 {
+  top: 15%;
+  left: 5%;
+}
+
+.tag-2 {
+  top: 35%;
+  right: 0;
+
+  animation-delay: 0.8s;
+}
+
+.tag-3 {
+  bottom: 25%;
+  left: 0;
+
+  animation-delay: 1.5s;
+}
+
+.tag-4 {
+  bottom: 8%;
+  right: 15%;
+
+  animation-delay: 2.2s;
+}
+
+
+/* ==================================
+   SCROLL
+================================== */
+
+.hero-scroll {
+  position: absolute;
+
+  bottom: 2rem;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 0.5rem;
+
+  color: var(--text-muted);
+
+  font-size: 0.65rem;
+
+  letter-spacing: 0.2em;
+
+  z-index: 3;
+}
+
+.scroll-line {
+  width: 1px;
+
+  height: 45px;
+
+  background:
+    linear-gradient(
+      var(--accent),
+      transparent
+    );
+
+  animation:
+    scrollPulse 1.8s ease-in-out infinite;
+}
+
+
+/* ==================================
+   ANIMAÇÕES
+================================== */
+
+@keyframes fadeUp {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+@keyframes heroReveal {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+@keyframes glowDrift {
+
+  0%,
+  100% {
+    transform:
+      translate(0, 0);
+  }
+
+  50% {
+    transform:
+      translate(-25px, 20px);
+  }
+
+}
+
+@keyframes orbFloat {
+
+  0%,
+  100% {
+    transform:
+      translate(0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate(-15px, -20px)
+      scale(1.05);
+  }
+
+}
+
+@keyframes tagFloat {
+
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-12px);
+  }
+
+}
+
+@keyframes scrollPulse {
+
+  0%,
+  100% {
+    opacity: 0.3;
+
+    transform:
+      scaleY(0.7);
+  }
+
+  50% {
+    opacity: 1;
+
+    transform:
+      scaleY(1);
+  }
+
+}
+
+
+/* ==================================
+   TABLET
+================================== */
+
+@media (max-width: 800px) {
+
+  .hero {
+    min-height: 85vh;
+
+    padding:
+      7rem 1.5rem 4rem;
+  }
+
+  .hero-content {
+    width: 100%;
+
+    margin-left: 0;
+  }
+
+  .hero-decoration {
+    right: -180px;
+
+    opacity: 0.55;
+  }
+
+  .hero h1 {
+    font-size: clamp(
+      2.8rem,
+      14vw,
+      4.5rem
+    );
+  }
+
+  .hero-scroll {
+    display: none;
+  }
+
+}
+
+
+/* ==================================
+   CELULAR
+================================== */
+
+@media (max-width: 500px) {
+
+  .hero {
+    padding:
+      6rem 1.25rem 3rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .hero-button {
+    width: 100%;
+  }
+
+  .hero-decoration {
+    opacity: 0.35;
+  }
+
+}

@@ -1,0 +1,94 @@
+<section class="skills-section" id="skills">
+
+  <header class="skills-header">
+    <span class="skills-eyebrow">02 · HABILIDADES</span>
+
+    <h2>
+      Minhas habilidades
+    </h2>
+
+    <p>
+      Tecnologias e ferramentas que utilizo nos meus estudos,
+      projetos e desenvolvimento profissional.
+      </p>
+    
+  
+  </header>
+
+  <div
+    class="skills-stage"
+    [class.open]="aberto()"
+    [class.has-selection]="!!selecionada()"
+    [style.--n]="habilidades.length"
+  >
+    @for (skill of habilidades; track skill.nome; let i = $index) {
+
+      <button
+        class="skill-card"
+        type="button"
+        [class.is-selected]="selecionada() === skill"
+        [attr.data-cat]="skill.categoria"
+        [style.--i]="i"
+        [style.--j]="(i % 3) - 1"
+        [attr.aria-label]="skill.nome + ', nível ' + skill.nivel + '%'"
+        (click)="clicarCarta(skill)"
+      >
+        <span class="card-inner">
+
+          <span class="card-face card-front">
+            <span class="card-top">
+              <span class="card-number">{{ formatarNumero(i) }}</span>
+              <span class="card-category">{{ skill.categoria }}</span>
+            </span>
+
+            <span class="card-name">{{ skill.nome }}</span>
+
+            <span class="card-bottom">
+              <span>Nível</span>
+              <strong>{{ skill.nivel }}%</strong>
+            </span>
+          </span>
+
+          <span class="card-face card-back">
+            <span class="back-emblem">{{ '{ }' }}</span>
+          </span>
+
+        </span>
+      </button>
+
+    }
+  </div>
+
+  <div class="skills-info">
+    @if (selecionada(); as skill) {
+
+      <div class="info-card" [attr.data-cat]="skill.categoria">
+        <span class="info-category">{{ skill.categoria }}</span>
+        <h3>{{ skill.nome }}</h3>
+
+        <div class="level-info">
+          <span>Nível</span>
+          <strong>{{ skill.nivel }}%</strong>
+        </div>
+        <div class="progress-bar">
+          <div class="progress" [style.width.%]="skill.nivel"></div>
+        </div>
+      </div>
+
+    } @else {
+
+      <p class="info-hint" >
+        {{ aberto() ? 'Escolha uma carta do baralho' : 'Clique no baralho para abrir' }}
+      </p>
+
+    }
+  </div>
+
+  <div class="skills-actions">
+    <button class="skills-open" type="button" (click)="alternarBaralho()">
+      <span>{{ aberto() ? 'Recolher baralho' : 'Abrir baralho' }}</span>
+      <span class="open-icon">{{ aberto() ? '−' : '+' }}</span>
+    </button>
+  </div>
+
+</section>

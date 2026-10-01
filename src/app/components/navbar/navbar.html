@@ -1,0 +1,19 @@
+<nav class="navbar">
+
+  <a href="#inicio" class="logo">
+    LAÍS<span>.</span>
+  </a>
+
+  <div class="nav-links">
+    @for (link of links; track link.nome) {
+      <a [href]="link.destino">
+        {{ link.nome }}
+      </a>
+    }
+  </div>
+
+  <a href="#contato" class="nav-button">
+    Vamos conversar
+  </a>
+
+</nav>

@@ -1,0 +1,482 @@
+.skills-section {
+  position: relative;
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  padding: 7rem 0;
+  overflow-x: clip;
+}
+
+/* ================================
+   HEADER
+================================ */
+
+.skills-header {
+  max-width: 700px;
+  margin-bottom: 2rem;
+}
+
+.skills-eyebrow {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.skills-header h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.skills-header h2 span {
+  display: block;
+  font-style: italic;
+  background: linear-gradient(100deg, var(--accent), var(--lavender), var(--gold));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: skillsGradient 6s linear infinite;
+}
+
+.skills-header p {
+  max-width: 620px;
+  margin-top: 1.5rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ================================
+   PALCO DO BARALHO
+================================ */
+
+.skills-stage {
+  --w: 140px;
+  --h: 200px;
+  --angle: 5.4deg;
+  --mid: calc((var(--n) - 1) / 2);
+  --ease: var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+
+  position: relative;
+  height: 440px;
+}
+
+/* ================================
+   CARTA (posição no baralho)
+================================ */
+
+.skill-card {
+  --card-accent: var(--accent);
+
+  position: absolute;
+  top: 70px;
+  left: 50%;
+
+  width: var(--w);
+  height: var(--h);
+  margin-left: calc(var(--w) / -2);
+  padding: 0;
+
+  border: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 900px;
+
+  /* pivô bem abaixo da carta: gira em leque */
+  transform-origin: 50% 230%;
+  z-index: var(--i);
+
+  /* FECHADO: pilha levemente bagunçada */
+  transform:
+    translate(calc(var(--j) * 2px), calc(var(--i) * -1.2px))
+    rotate(calc(var(--j) * 1.2deg));
+
+  transition:
+    transform 0.7s var(--ease),
+    filter 0.4s ease;
+  transition-delay: calc((var(--n) - var(--i)) * 25ms);
+}
+
+.skill-card[data-cat='Backend']     { --card-accent: var(--lavender); }
+.skill-card[data-cat='Frontend']    { --card-accent: var(--gold); }
+.skill-card[data-cat='Ferramentas'] { --card-accent: #5eead4; }
+
+/* ABERTO: leque */
+.skills-stage.open .skill-card {
+  transform: rotate(calc((var(--i) - var(--mid)) * var(--angle)));
+  transition-delay: calc(var(--i) * 30ms);
+}
+
+.skills-stage.open .skill-card:hover,
+.skills-stage.open .skill-card:focus-visible {
+  transform:
+    rotate(calc((var(--i) - var(--mid)) * var(--angle)))
+    translateY(-34px);
+  z-index: 50;
+  transition-delay: 0s;
+  outline: none;
+}
+
+/* carta escolhida sobe para o centro */
+.skills-stage.open .skill-card.is-selected {
+  transform: rotate(0deg) translateY(-32px) scale(1.08);
+  z-index: 60;
+  transition-delay: 0s;
+}
+
+.skills-stage.has-selection .skill-card:not(.is-selected) {
+  filter: brightness(0.55);
+}
+
+/* ================================
+   FLIP (verso -> frente)
+================================ */
+
+.card-inner {
+  position: absolute;
+  inset: 0;
+
+  transform-style: preserve-3d;
+  transform: rotateY(180deg);
+
+  transition: transform 0.8s var(--ease);
+  transition-delay: calc((var(--n) - var(--i)) * 25ms);
+}
+
+.skills-stage.open .card-inner {
+  transform: rotateY(0deg);
+  transition-delay: calc(var(--i) * 30ms + 150ms);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+  border-radius: 18px;
+
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* ================================
+   FRENTE
+================================ */
+
+.card-front {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 1rem;
+  text-align: left;
+  color: var(--text-primary);
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(145deg, #231f35, #121120);
+
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-front::before {
+  content: '';
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: var(--card-accent);
+  opacity: 0.18;
+  filter: blur(18px);
+}
+
+.skill-card:hover .card-front,
+.skill-card.is-selected .card-front {
+  border-color: var(--card-accent);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.4),
+    0 0 30px color-mix(in srgb, var(--card-accent) 35%, transparent);
+}
+
+.card-top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-number {
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.card-category {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--card-accent);
+  border-radius: 999px;
+  color: var(--card-accent);
+  font-size: 0.55rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.card-name {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  line-height: 1.05;
+  word-break: break-word;
+}
+
+.card-bottom {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+.card-bottom strong {
+  color: var(--card-accent);
+  font-size: 0.85rem;
+}
+
+/* ================================
+   VERSO
+================================ */
+
+.card-back {
+  display: grid;
+  place-items: center;
+
+  transform: rotateY(180deg);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.05) 0 6px,
+      transparent 6px 12px
+    ),
+    linear-gradient(145deg, #2a1230, #14101f);
+}
+
+.card-back::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  opacity: 0.55;
+}
+
+.back-emblem {
+  display: grid;
+  place-items: center;
+
+  width: 54px;
+  height: 54px;
+
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+
+  box-shadow: 0 0 25px rgba(255, 45, 149, 0.5);
+}
+
+/* ================================
+   INFO DA CARTA ESCOLHIDA
+================================ */
+
+.skills-info {
+  display: grid;
+  place-items: center;
+  min-height: 130px;
+  margin-top: 1rem;
+}
+
+.info-hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.info-card {
+  --card-accent: var(--accent);
+
+  width: min(460px, 100%);
+  text-align: center;
+  animation: infoRise 0.5s var(--ease-out, ease) both;
+}
+
+.info-card[data-cat='Backend']     { --card-accent: var(--lavender); }
+.info-card[data-cat='Frontend']    { --card-accent: var(--gold); }
+.info-card[data-cat='Ferramentas'] { --card-accent: #5eead4; }
+
+.info-category {
+  color: var(--card-accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.info-card h3 {
+  margin: 0.4rem 0 1rem;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1;
+}
+
+.level-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.level-info strong {
+  color: var(--card-accent);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.progress {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--card-accent), var(--lavender));
+  box-shadow: 0 0 15px color-mix(in srgb, var(--card-accent) 50%, transparent);
+  transform-origin: left;
+  animation: fillBar 0.9s var(--ease-out, ease) both;
+}
+
+/* ================================
+   BOTÃO
+================================ */
+
+.skills-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.skills-open {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 0.8rem 1.3rem;
+
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skills-open:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 0 25px rgba(255, 45, 149, 0.25);
+}
+
+.open-icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+/* ================================
+   ANIMAÇÕES
+================================ */
+
+@keyframes skillsGradient {
+  to { background-position: 200% 0; }
+}
+
+@keyframes infoRise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fillBar {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+  .skills-section {
+    padding: 5rem 0;
+  }
+
+  .skills-stage {
+    --w: 96px;
+    --h: 140px;
+    --angle: 3deg;
+    height: 330px;
+  }
+
+  .skill-card {
+    top: 50px;
+  }
+
+  .card-front {
+    padding: 0.7rem;
+  }
+
+  .card-name {
+    font-size: 1rem;
+  }
+
+  .card-category {
+    display: none;
+  }
+
+  .back-emblem {
+    width: 38px;
+    height: 38px;
+    font-size: 0.8rem;
+  }
+}

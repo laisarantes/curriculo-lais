@@ -1,0 +1,105 @@
+<section class="experience-section" id="experiencia">
+
+  <header class="experience-header-section">
+    <span class="experience-eyebrow">05 · EXPERIÊNCIA</span>
+
+    <h2>
+      Colocando em
+      <span>prática</span>
+    </h2>
+
+    <p>
+      Onde atuei, o que aprendi e como isso me trouxe até os dados.
+    </p>
+  </header>
+
+  <div class="experience-layout">
+
+    <!-- ABAS -->
+    <div
+      class="experience-tabs"
+      role="tablist"
+      aria-label="Experiências profissionais"
+      (keydown)="aoTeclar($event)">
+
+      @for (experiencia of experiencias(); track experiencia.empresa; let i = $index) {
+        <button
+          #aba
+          type="button"
+          role="tab"
+          class="exp-tab"
+          [class.ativa]="selecionada() === i"
+          [attr.aria-selected]="selecionada() === i"
+          [attr.tabindex]="selecionada() === i ? 0 : -1"
+          (click)="selecionar(i)">
+
+          <span class="exp-tab-num">{{ formatar(i) }}</span>
+
+          <span class="exp-tab-texto">
+            <strong>{{ experiencia.empresa }}</strong>
+            <small>{{ experiencia.periodo }}</small>
+          </span>
+
+          @if (ehAtual(experiencia)) {
+            <i class="exp-tab-dot" title="Em andamento"></i>
+          }
+        </button>
+      }
+
+    </div>
+
+    <!-- PAINEL -->
+    @for (exp of [experiencia()]; track exp.empresa) {
+      <article
+        class="exp-painel"
+        role="tabpanel"
+        (pointermove)="aoMover($event)">
+
+        <div class="exp-janela">
+          <span class="exp-janela-dots" aria-hidden="true">
+            <i></i><i></i><i></i>
+          </span>
+          <span class="exp-janela-titulo">~/experiencia/{{ slug(exp.empresa) }}.log</span>
+        </div>
+
+        <div class="exp-corpo">
+
+          <div class="exp-topo">
+            <div>
+              <h3>{{ exp.cargo }}</h3>
+              <h4>{{ exp.empresa }}</h4>
+            </div>
+
+            <span class="exp-periodo">
+              @if (ehAtual(exp)) {
+                <i class="exp-periodo-dot"></i>
+              }
+              {{ exp.periodo }}
+            </span>
+          </div>
+
+          <div class="exp-info">
+            <span>{{ exp.tipo }}</span>
+            <span>{{ exp.local }}</span>
+          </div>
+
+          <ul class="exp-linhas">
+            @for (item of exp.descricao; track item; let k = $index) {
+              <li [style.--d]="k">
+                <span class="exp-seta">›</span>
+                <span>{{ item }}</span>
+              </li>
+            }
+          </ul>
+
+          <span class="exp-cursor" aria-hidden="true">_</span>
+
+        </div>
+
+      </article>
+    } @empty {
+      <p class="experience-vazio">Nenhuma experiência cadastrada.</p>
+    }
+
+  </div>
+</section>

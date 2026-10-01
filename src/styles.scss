@@ -1,1 +1,305 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  /* ================================
+     CORES — CHIC & CYBER
+  ================================= */
+
+  --bg-primary: #0b0b10;
+  --bg-secondary: #12111a;
+  --bg-card: rgba(255, 255, 255, 0.055);
+
+  --accent: #ff2d95;
+  --accent-hover: #ff6bb5;
+  --accent-glow: rgba(255, 45, 149, 0.35);
+
+  --lavender: #c77dff;
+  --champagne: #e8c97a;
+  --gold: var(--champagne); /* NOVO: usado no título dos projetos */
+
+  --text-primary: #f8f4f7;
+  --text-secondary: #b9adb7;
+  --text-muted: #817582;
+
+  /* ================================
+     BORDAS / GLASS
+  ================================= */
+
+  --border: rgba(255, 255, 255, 0.08);
+
+  --glass: rgba(255, 255, 255, 0.055);
+
+  --glass-strong: rgba(255, 255, 255, 0.09);
+
+  /* ================================
+     SOMBRAS / GLOW
+  ================================= */
+
+  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.25);
+
+  --shadow-glow:
+    0 0 25px rgba(255, 45, 149, 0.18);
+
+  --shadow-glow-strong:
+    0 0 40px rgba(255, 45, 149, 0.28);
+
+  /* ================================
+     BORDER RADIUS
+  ================================= */
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 999px;
+
+  /* ================================
+     ESPAÇAMENTOS
+  ================================= */
+
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 4rem;
+
+  /* ================================
+     ANIMAÇÕES
+  ================================= */
+
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.35s ease;
+  --transition-slow: 0.6s ease;
+}
+
+
+/* ==================================
+   RESET
+================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(255, 45, 149, 0.08),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(199, 125, 255, 0.07),
+      transparent 30%
+    ),
+    var(--bg-primary);
+
+  color: var(--text-primary);
+
+  font-family:
+    Inter,
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  min-height: 100vh;
+
+  /* MUDOU: "hidden" quebra o position: sticky, "clip" não */
+  overflow-x: clip;
+}
+
+
+/* ==================================
+   SELEÇÃO DE TEXTO
+================================== */
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+
+/* ==================================
+   SCROLLBAR
+================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    var(--accent),
+    var(--lavender)
+  );
+
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-hover);
+}
+
+
+/* ==================================
+   LINKS
+================================== */
+
+a {
+  color: inherit;
+}
+
+
+/* ==================================
+   BOTÕES
+================================== */
+
+button {
+  font-family: inherit;
+}
+
+
+/* ==================================
+   CONTAINER PRINCIPAL
+================================== */
+
+main {
+  position: relative;
+}
+
+
+/* ==================================
+   EFEITO DE BRILHO AMBIENTAL
+================================== */
+
+main::before {
+  content: '';
+
+  position: fixed;
+
+  width: 350px;
+  height: 350px;
+
+  top: 10%;
+  right: -180px;
+
+  background: var(--accent);
+
+  opacity: 0.06;
+
+  filter: blur(100px);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+main::after {
+  content: '';
+
+  position: fixed;
+
+  width: 300px;
+  height: 300px;
+
+  bottom: 5%;
+  left: -150px;
+
+  background: var(--lavender);
+
+  opacity: 0.05;
+
+  filter: blur(100px);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+
+/* ==================================
+   CURSOR AURA
+================================== */
+
+.cursor-aura {
+  position: fixed;
+
+  width: 120px;
+  height: 120px;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 45, 149, 0.22) 0%,
+      rgba(199, 125, 255, 0.12) 35%,
+      transparent 70%
+    );
+
+  filter: blur(8px);
+
+  pointer-events: none;
+
+  z-index: 9999;
+
+  transition:
+    left 0.08s ease-out,
+    top 0.08s ease-out;
+
+  opacity: 0.8;
+}
+
+
+/* ==================================
+   PONTO DE LUZ DO CURSOR
+================================== */
+
+.cursor-aura::before {
+  content: '';
+
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 18px;
+  height: 18px;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: var(--accent);
+
+  box-shadow:
+    0 0 15px var(--accent),
+    0 0 35px rgba(255, 45, 149, 0.6),
+    0 0 60px rgba(199, 125, 255, 0.4);
+}
+
+
+/* ==================================
+   CURSOR — MOBILE
+================================== */
+
+@media (hover: none) {
+  .cursor-aura {
+    display: none;
+  }
+}

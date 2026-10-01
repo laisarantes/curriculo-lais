@@ -1,0 +1,76 @@
+<section class="projects-section" id="projetos">
+
+  <header class="projects-header">
+    <span class="projects-eyebrow">03 · PROJETOS</span>
+
+    <h2>
+      Dados em
+      <span>movimento</span>
+    </h2>
+
+    <p>
+      Pipelines, transformações e análises que construí do zero.
+      Passe o mouse sobre um projeto para ver o fluxo dos dados.
+    </p>
+  </header>
+
+  <div #scroller class="projects-scroller">
+    <div #palco class="projects-sticky">
+      <div #trilha class="projects-track">
+
+        @for (projeto of projetos(); track projeto.nome; let i = $index) {
+
+          <div class="stack-item">
+
+            <article class="project-card" (pointermove)="aoMover($event)">
+
+              <div class="card-head">
+                <span class="project-number">{{ formatar(i) }}</span>
+
+                <div class="tecnologias">
+                  @for (tecnologia of projeto.tecnologias; track tecnologia) {
+                    <span class="tecnologia">{{ tecnologia }}</span>
+                  }
+                </div>
+              </div>
+
+              <h3>{{ projeto.nome }}</h3>
+
+              <p>{{ projeto.descricao }}</p>
+
+              <div class="pipeline" aria-label="Fluxo de dados do projeto">
+                @for (etapa of projeto.pipeline; track $index; let k = $index; let ultimo = $last) {
+
+                  <span class="pipe-node" [style.--k]="k">
+                    <i class="pipe-dot"></i>
+                    {{ etapa }}
+                  </span>
+
+                  @if (!ultimo) {
+                    <span class="pipe-line" [style.--k]="k"></span>
+                  }
+
+                }
+              </div>
+
+              @if (projeto.link) {
+                <a
+                  class="btn-projeto"
+                  [href]="projeto.link"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  Ver projeto <span class="seta">→</span>
+                </a>
+              }
+
+            </article>
+
+          </div>
+
+        }
+
+      </div>
+    </div>
+  </div>
+
+</section>

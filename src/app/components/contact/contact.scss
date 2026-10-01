@@ -1,0 +1,65 @@
+.contact-section {
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.titulo-secao {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+  border-left: 4px solid var(--accent);
+  padding-left: var(--space-sm);
+}
+
+.contact-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+
+  padding: var(--space-lg);
+
+  background-color: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+
+  text-decoration: none;
+
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast);
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+}
+
+.contact-card h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.contact-card p {
+  margin: var(--space-xs) 0 0;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.contact-arrow {
+  color: var(--accent);
+  font-size: 1.5rem;
+  font-weight: 700;
+}

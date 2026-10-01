@@ -1,0 +1,59 @@
+<section class="education-section" id="formacao">
+
+  <header class="education-header-section">
+    <span class="education-eyebrow">04 · FORMAÇÃO</span>
+
+    <h2>
+      Sempre
+      <span>aprendendo</span>
+    </h2>
+
+    <p>
+      Minha trajetória acadêmica e de estudos, do desenvolvimento web
+      aos dados.
+    </p>
+  </header>
+
+  <div #lista class="education-list">
+
+    <span class="education-trilha" aria-hidden="true"></span>
+    <span class="education-progresso" aria-hidden="true"></span>
+
+    @for (formacao of formacoes(); track formacao.curso; let i = $index) {
+
+      <div #item class="education-item">
+
+        <span class="edu-node" aria-hidden="true"></span>
+
+        <article class="education-card" (pointermove)="aoMover($event)">
+
+          <div class="education-header">
+            <span class="education-numero">{{ formatar(i) }}</span>
+
+            <div class="education-meta">
+              @if (formacao.atual) {
+                <span class="education-atual">
+                  <i class="education-atual-dot"></i>
+                  Em andamento
+                </span>
+              }
+              <span class="education-periodo">{{ formacao.periodo }}</span>
+            </div>
+          </div>
+
+          <h3>{{ formacao.curso }}</h3>
+
+          <h4>{{ formacao.instituicao }}</h4>
+
+          <p>{{ formacao.descricao }}</p>
+
+        </article>
+
+      </div>
+
+    } @empty {
+      <p class="education-vazio">Nenhuma formação cadastrada.</p>
+    }
+
+  </div>
+</section>
